@@ -35,7 +35,8 @@ void circle(float radiusX, float radiusY, float z,int loop){
         glEnd();
     glPopMatrix();
 }
- void hair_triangle(){
+
+void hair_triangle(){
     glBegin(GL_TRIANGLES);
         glVertex3d(0,2.4,2);
         glVertex3d(0.2,2,2);
@@ -43,9 +44,7 @@ void circle(float radiusX, float radiusY, float z,int loop){
     glEnd();
  }
 
-
-
-void human_for_stall(){
+void head(){
     ///head
     glColor3ub(238,213,183);
     glScaled(0.9,1.0,0.01);
@@ -62,49 +61,77 @@ void human_for_stall(){
         ///circle(0.5,0.5,50);
     glPopMatrix();
 
-    /*
-    glPushMatrix();
-        glColor3ub(238,213,183);
-        glTranslated(-0.4,-2.1,2);
-        hair_triangle();
-    glPopMatrix();
-
-
-    glPushMatrix();
-        glColor3ub(238,213,183);
-        glTranslated(-0.7,-1.2,1);
-        //glRotated(90,1,0,0);
-        glScaled(0.8,0.7,0.1);
-        hair_triangle();
-    glPopMatrix();
-    */
-
     ///neck
     glColor3ub(238,213,183);
     glTranslated(0,-1.2,0);
     glScaled(0.6,1.0,0.01);
     glutSolidTorus(0.6, 0.6,10,10);
-    ///body
+}
+
+void half_body(){
+    glBegin(GL_POLYGON);
+        glVertex3d(0,0,1);
+        glVertex3d(1.2,0.3,1);
+        glVertex3d(2.5,-0.5,1);
+        glVertex3d(2.5,-1.5,1);
+        glVertex3d(1.8,-1.5,1);
+        //glVertex3d(1.8,-0.5,1);
+        //glVertex3d(1.9,-2.5,1);
+        //glVertex3d(-1.9,-2.5,1);
+        //glVertex3d(-1.8,-0.5,1);
+        glVertex3d(-1.8,-1.5,1);
+        glVertex3d(-2.5,-1.5,1);
+        glVertex3d(-2.5,-0.5,1);
+        glVertex3d(-1.2,0.3,1);
+    glEnd();
+}
+
+void full_body(){
     glPushMatrix();
-        glColor3d(0,0,1);
-        glTranslated(0,-0.7,0);
-        //glScaled(0.6,1.0,0.8);
         glBegin(GL_POLYGON);
             glVertex3d(0,0,1);
             glVertex3d(1.2,0.3,1);
-            glVertex3d(2.5,-0.5,1);
-            glVertex3d(2.5,-1.5,1);
-            glVertex3d(1.8,-1.5,1);
-            //glVertex3d(1.8,-0.5,1);
-            //glVertex3d(1.9,-2.5,1);
-            //glVertex3d(-1.9,-2.5,1);
-            //glVertex3d(-1.8,-0.5,1);
-            glVertex3d(-1.8,-1.5,1);
-            glVertex3d(-2.5,-1.5,1);
-            glVertex3d(-2.5,-0.5,1);
+            glVertex3d(2.7,-0.3,1);
+            glVertex3d(3.5,-1.5,1);
+            glVertex3d(2.5,-1.7,1);
+            glVertex3d(2,-1,1);
+            glVertex3d(2,-2.7,1);
+            glVertex3d(-2,-2.7,1);
+            glVertex3d(-2,-1,1);
+            glVertex3d(-2.5,-1.7,1);
+            glVertex3d(-3.5,-1.5,1);
+            glVertex3d(-2.7,-0.3,1);
             glVertex3d(-1.2,0.3,1);
-
         glEnd();
+    glPopMatrix();
+
+    ///legs
+    glPushMatrix();
+        glColor3ub(0,0,0);
+        glBegin(GL_POLYGON);
+           glVertex3d(2,-2.7,1);
+           glVertex3d(2,-5.5,1);
+           glVertex3d(0.5,-5.5,1);
+           glVertex3d(0.5,-3,1);
+           glVertex3d(-0.5,-3,1);
+           glVertex3d(-0.5,-5.5,1);
+           glVertex3d(-2,-5.5,1);
+           glVertex3d(-2,-2.7,1);
+        glEnd();
+    glPopMatrix();
+
+
+}
+
+void human_for_stall(){
+    ///head
+    head();
+    ///body
+    glPushMatrix();
+        glColor3ub(0,0,255);
+        glTranslated(0,-0.7,0);
+        //glScaled(0.6,1.0,0.8);
+        half_body();
     glPopMatrix();
 
 
@@ -112,19 +139,39 @@ void human_for_stall(){
 }
 
 
+
+void human(){
+    glPushMatrix();
+        glTranslated(2,0,1);
+        head();
+        glColor3ub(255,0,0);
+        glTranslated(0,-0.7,0);
+        full_body();
+        //human_for_stall();
+
+    glPopMatrix();
+}
+
 void myDisplay(){
   glClearColor(1,1,1,0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  glTranslated(0,2,-20);
-  glRotated(r,0,1,0);
+
   glPushMatrix();
+    glTranslated(-2,2,-20);
+    glRotated(r,0,1,0);
+    //glTranslated(-2,2,-20);
+    //glRotated(30,0,1,0);
     human_for_stall();
   glPopMatrix();
+
+
   glPushMatrix();
-   // human();
+    glTranslated(2,2,-20);
+    glRotated(r,0,1,0);
+    human();
   glPopMatrix();
 
 
